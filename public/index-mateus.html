@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA</title>
+</head>
+<body>
+        <Div>
+            <h1>Filosofadas de socrátes</h1>
+
+            Sábio é aquele que conhece os limites da própria ignorância;
+
+            É melhor fazer pouco e bem, do que muito e mal;
+
+            A verdade não está com os homens, mas entre os homens;
+
+            A palavra é o fio de ouro do pensamento;
+
+            Quatro características deve ter um juiz: ouvir cortesmente, responder sabiamente, ponderar prudentemente e decidir imparcialmente.
+        </Div>
+        <div>
+        <a href="pagina2.html">pagina2</a> 
+        </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            if ('serviceWorker' in navigator) {
+                alert('as');
+                console.log('has serviceWorker');
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('serviceWorker.js')
+                        .then((resgistration) => {
+                            alert('bs');
+                            console.log('Service worker registred.', resgistration);
+                        });
+                });
+            }else{
+                alert('cs');
+                console.log("your browser not supports serviceWorkers");
+            }
+        });
+    </script>
+
+</body>
+</html>

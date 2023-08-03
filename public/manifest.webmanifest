@@ -1,0 +1,9 @@
+{
+    "name": "app pwa",
+    "short_name": "pwa",
+    "icons": [],   
+    "start_url": "/index-mateus.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#199332"
+}
