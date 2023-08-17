@@ -15,7 +15,7 @@ class Products extends Model
     protected $table = 'products';
 
     /** Define os campos que são aceitos nos formulários */
-    protected $fillable = ['name', 'description', 'serie', 'status','id_user', 'date_acquisition', 'id_labels', 'id_product_group', 'id_product_models', 'id_manufacturer'] ;
+    protected $fillable = ['image','name', 'description', 'serie', 'status','id_user', 'date_acquisition', 'id_labels', 'id_product_group', 'id_product_models', 'id_manufacturer'] ;
 
     public function user()
     {

@@ -68,6 +68,11 @@
                                                 $menu = Session::get('menuSession') ;
                                             @endphp
                                             @foreach($menu[$key] as $menuMenu)
+
+                                                @if( @$menuMenu['name'][0] == 'A' && @$menuMenu['name'][1] == 'P' )
+                                                    @continue 
+                                                @endif
+
                                                 <li>
                                                     <a href="{{@$menuMenu['slug']}}">{{@$menuMenu['name']}}</a>
                                                 </li>

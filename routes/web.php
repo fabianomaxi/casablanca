@@ -29,12 +29,21 @@ Route::get('change-depto/{depto}', 'App\Http\Controllers\DashboardController@cha
 Route::get('import-data', 'App\Http\Controllers\DashboardController@importData');
 Route::post('upload-import', 'App\Http\Controllers\DashboardController@uploadImport');
 
+# APLICATIVO
 Route::get('aplicativo', 'App\Http\Controllers\AppController@index');
 Route::get('aplicativo/login', 'App\Http\Controllers\AppController@login');
+Route::get('consulta_equipamentos', 'App\Http\Controllers\AppController@consultaEquip');
+Route::get('ocorrencias', 'App\Http\Controllers\AppController@ocorrencias');
+Route::get('solic_permissoes', 'App\Http\Controllers\AppController@solicPermissoes');
+Route::get('mov_lote', 'App\Http\Controllers\AppController@index');
+Route::get('discart_lote', 'App\Http\Controllers\AppController@discartLot');
+Route::get('finish_lote', 'App\Http\Controllers\AppController@finishLote');
 
 Route::post('get-produto-app', 'App\Http\Controllers\AppController@getProdutoApp');
 Route::post('save-exit-app', 'App\Http\Controllers\AppController@saveExitApp');
+Route::post('add-lote-app', 'App\Http\Controllers\AppController@addLote');
 Route::post('busca-prod-app', 'App\Http\Controllers\AppController@index');
+Route::post('save-occurrence-app', 'App\Http\Controllers\AppController@saveOccurrence');
 
 Route::get('/', 'App\Http\Controllers\DashboardController@login');
 

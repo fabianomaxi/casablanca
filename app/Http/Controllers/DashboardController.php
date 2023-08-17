@@ -254,12 +254,12 @@ class DashboardController extends Controller
                 }
             }
 
-            $modulesMain = Modules::whereRaw("main_module is null and module_departament in (".$user->id_module_departament.") ")->get() ;
+            $modulesMain = Modules::whereRaw("main_module is null and show_panel = '1' and module_departament in (".$user->id_module_departament.") ")->orderBy('name')->get() ;
 
             if( $user->is_admin == '1' ){
-                $modulesUser = Modules::whereRaw(" main_module is not null ")->orderBy('order')->get() ;
+                $modulesUser = Modules::whereRaw(" main_module is not null  and show_panel = '1'  ")->orderBy('name')->get() ;
             } else {
-                $modulesUser = Modules::whereRaw(" main_module is not null and id_module in( ".implode(",",$modules)." ) ")->orderBy('order')->get() ;
+                $modulesUser = Modules::whereRaw(" main_module is not null  and show_panel = '1'  and id_module in( ".implode(",",$modules)." ) ")->orderBy('name')->get() ;
 
             }
 
@@ -291,14 +291,19 @@ class DashboardController extends Controller
                     $menuDepto[] = [ 'slug' => $moduleDepart->slug, 'name' => $moduleDepart->name ];
                 }
             }
+
+            $request->session()->forget('menuMainSession');
+            $request->session()->forget('menuSession');
+            $request->session()->forget('menuDepto');
             
             $request->session()->put('userIdSession', $user->id_user);
             $request->session()->put('nameSession', $user->name);
             $request->session()->put('isAdminSession', $user->is_admin);
             $request->session()->put('idModuleDepartamentSession', $user->id_module_departament);
- 
+
             $request->session()->put('menuMainSession', $menuMain);
             $request->session()->put('menuSession', $menu);
+
             $request->session()->put('menuDepto', $menuDepto);
             $id_module_departament = explode(',',$user->id_module_departament) ;
 
