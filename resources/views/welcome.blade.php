@@ -102,6 +102,7 @@
 
         <script src="{{URL::to('/')}}/assets-novo/js/app.js"></script>
         
+        
         <!-- Js: validação do login -->
         <script src="{{URL::to('/')}}/js/login.js"></script>
 
