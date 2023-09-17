@@ -215,7 +215,7 @@ class AppController extends Controller
         $movements = Movements::where('id_products',$id_products)->orderBy('id_movements','desc')->first() ;
         if( ! empty($movements) ){
             $stockLocations = StockLocations::where('id_stock_locations',$movements->id_stock_locations_to)->first() ;
-            return $stockLocations->name ;
+            return @$stockLocations->name ;
         }
 
         return 'Estoque não localizado' ;

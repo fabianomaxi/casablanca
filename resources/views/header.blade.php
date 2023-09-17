@@ -36,9 +36,10 @@
                     <div class="d-flex">
 
                          <!-- App Search-->
-                         <form class="app-search d-none d-lg-block">
+                         <form class="app-search d-none d-lg-block" method="POST" action="products/search">
+                         @csrf
                             <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Equipamento, Etiquera ou Série...">
+                                <input type="text" value="{{@request()->search}}" name="search" class="form-control" placeholder="Equipamento, Etiquera ou Série...">
                                 <span class="ri-search-line"></span>
                             </div>
                         </form>

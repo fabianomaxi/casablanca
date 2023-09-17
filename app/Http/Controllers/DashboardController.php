@@ -484,7 +484,178 @@ class DashboardController extends Controller
     }
 
     public function uploadImport( Request $request ) {
+        $csv = array();
 
+        $handle = fopen($_FILES['csv']['tmp_name'], "r");
+
+        $row = 0;
+        $return = '' ;
+
+        while ($line = fgetcsv($handle, 100000, ";")) {
+
+            $data = $line ;
+            if( empty($data['0']) ){
+                $row++ ;
+                continue ;
+            }
+            
+            if( ! empty( $data['0'] ) ) {
+
+                $produto = trim(utf8_encode(@$data['0'])) ;
+                $modelo = trim(utf8_encode(@$data['1'])) ;
+                $serie = trim(utf8_encode(@$data['2'])) ;
+                $labels = trim(@$data['3']) ;
+                $origem = trim(utf8_encode(@$data['4'])) ;
+                $destino = trim(utf8_encode(@$data['5'])) ;
+                $dateArr = explode('/' , @$data['6']) ;
+                $obs = trim(utf8_encode(@$data['7'])) . " - " . trim(utf8_encode(@$data['8'])) . " - " . trim(utf8_encode(@$data['9'])) ;
+
+                $return .= 'Produto: '.str_replace("'"," ",$produto).' <br> ';
+                $return .= 'modelo: '.$modelo.' <br> ';
+                $return .= 'serie: '.$serie.' <br> ';
+                $return .= 'labels: '.$labels.' <br> ';
+                $return .= 'origem: '.$origem.' <br> ';
+                $return .= 'destino: '.$destino.' <br> ';
+                $return .= 'obs: '.$obs.' <br><hr><br> ';
+
+                if( empty($labels)) {
+                    $return .= 'Etiqueta para produto '.$produto.' não está cadastrada. <br><hr><br> ';
+                }
+
+                $id_manufacturer = '0' ;
+
+                if( array_key_exists(2,$dateArr) ){
+                    $date = $dateArr[2] . "-" . $dateArr[1] . "-" . $dateArr[0] ;  
+                } else {
+                    $date = date('Y-m-d') ;
+                }
+
+                // salvar fabricante1
+                /*
+                    $sql = " select * from manufacturer where name = '".$fabricante."' " ;
+                    $results = DB::connection('data_reports')->select($sql);
+                    if( empty( $results) ) {
+                        $sql = "insert into manufacturer( name , id_user ) values( '".$fabricante."' , 27 ) " ;
+                        DB::connection('data_reports')->select($sql);
+                        $sql = " select max(id_manufacturer) as id_manufacturer from manufacturer where name = '".$fabricante."' " ;
+                        $results2 = DB::connection('data_reports')->select($sql);
+                        $id_manufacturer = $results2[0]->id_manufacturer ;
+                    } else {
+                        $id_manufacturer = $results[0]->id_manufacturer ;
+                    }
+                */   
+                
+                // salvar modelo
+                    $sql = " select * from product_models where name = '".$modelo."' " ;
+                    $results = DB::connection('data_reports')->select($sql);
+                    if( empty( $results) ) {
+                        $sql = "insert into product_models( name, id_user ) values( '".$modelo."' , 27 ) " ;
+                        DB::connection('data_reports')->select($sql);
+                        $sql = " select max(id_product_models) as id_product_models from product_models where name = '".$modelo."' " ;
+                        $results2 = DB::connection('data_reports')->select($sql);
+                        $id_product_models = $results2[0]->id_product_models ;
+                    } else {
+                        $return .= "Modelo ".$results[0]->name." já existe " ;
+                        $id_product_models = $results[0]->id_product_models ;
+                    }
+
+                // salvar origem
+                    $sql = " select * from stock_locations where name = '".$origem."' " ;
+                    $results = DB::connection('data_reports')->select($sql);
+                    if( empty( $results) ) {
+                        $sql = "insert into stock_locations( name, id_user ) values( '".$origem."' , 27 ) " ;
+                        DB::connection('data_reports')->select($sql);
+                        $sql = " select max(id_stock_locations) as id_stock_locations from stock_locations where name = '".$origem."' " ;
+                        $results2 = DB::connection('data_reports')->select($sql);
+                        $id_stock_locations = $results2[0]->id_stock_locations ;
+                    } else {
+                        $return .= "Local de origem ".$results[0]->name." já existe " ;
+                        $id_stock_locations = $results[0]->id_stock_locations ;
+                    }
+
+                // salvar destino
+                $sql = " select * from stock_locations where name = '".$destino."' " ;
+                $results = DB::connection('data_reports')->select($sql);
+                if( empty( $results) ) {
+                    $sql = "insert into stock_locations( name, id_user ) values( '".$destino."' , 27 ) " ;
+                    DB::connection('data_reports')->select($sql);
+                    $sql = " select max(id_stock_locations) as id_stock_locations from stock_locations where name = '".$destino."' " ;
+                    $results2 = DB::connection('data_reports')->select($sql);
+                    $id_stock_locations2 = $results2[0]->id_stock_locations ;
+                } else {
+                    $return .= "Local de destino ".$results[0]->name." já existe " ;
+                    $id_stock_locations2 = $results[0]->id_stock_locations ;
+                }
+
+                // salvar label
+                if( $labels != 'n/c' ){
+
+                    $sql = " select * from labels where name = '".$labels."' " ;
+                    $results = DB::connection('data_reports')->select($sql);
+                    if( empty( $results) ) {
+                        $sql = "insert into labels( name, id_user ) values( '".$labels."' , 27 ) " ;
+                        DB::connection('data_reports')->select($sql);
+                        $sql = " select max(id_labels) as id_labels from labels where name = '".$labels."' " ;
+                        $results2 = DB::connection('data_reports')->select($sql);
+                        $id_labels = $results2[0]->id_labels ;
+                    } else {
+                        $return .= "Etiqueta ".$results[0]->name." já cadastrada " ;
+                        $id_labels = $results[0]->id_labels ;
+                    }
+
+                } else {
+                    $id_labels = 'NULL' ;
+                }
+
+                // checa se etiqueta esta sendo usada por outro equipamento
+
+                // salvar produto
+                $sql = "select * from products where name = '".str_replace("'"," ",$produto)."' and serie = '".str_replace("'"," ",$serie)."' ";
+                $results = DB::connection('data_reports')->select($sql);
+
+                if( empty( $results) ) {
+                    $sql = "insert into products( name, id_user, serie , id_labels , id_product_models, id_manufacturer ) 
+                    values( '".str_replace("'"," ",$produto)."' , 27 , '".str_replace("'"," ",$serie)."', ".$id_labels.", '".$id_product_models."', '".$id_manufacturer."' ) " ;
+                    DB::connection('data_reports')->select($sql);
+                    $sql = " select max(id_products) as id_products from products where name = '".str_replace("'"," ",$produto)."' and serie = '".str_replace("'"," ",$serie)."' " ;
+                    $results2 = DB::connection('data_reports')->select($sql);
+                    $id_products = $results2[0]->id_products ;
+                } else {
+                    $return .= "Produto ".$results[0]->name." já cadastrada " ;
+                    $id_products = $results[0]->id_products ;
+                }
+
+                // salvar mvimentação
+                $sql = "insert into movements(
+                    description,
+                    id_user,
+                    id_products,
+                    id_stock_locations_from,
+                    id_stock_locations_to,
+                    date
+                ) values(
+                    '".$obs."',
+                    27,
+                    ".$id_products.",
+                    ".$id_stock_locations.",
+                    ".$id_stock_locations2.",
+                    '".$date."'  
+                )" ;
+
+                DB::connection('data_reports')->select($sql);
+
+                $row++;
+            }
+
+        }
+
+        fclose($handle);
+        
+        return view('import',['dataimimport'=>' Registros importados com sucesso.']);
+
+    }  
+    
+    public function uploadImportOld( Request $request ) {
         $csv = array();
 
         $handle = fopen($_FILES['csv']['tmp_name'], "r");
@@ -493,7 +664,7 @@ class DashboardController extends Controller
         while ($line = fgetcsv($handle, 100000, ";")) {
 
             $data = $line ;
-
+            print_r( $data ) ; exit ;
 
             // travar para não repetir registros
 
@@ -545,6 +716,7 @@ class DashboardController extends Controller
                 } else {
                     $date = date('Y-m-d') ;
                 }
+                
                 
                 // salvar fabricante
                     $sql = " select * from manufacturer where name = '".$fabricante."' " ;
@@ -619,14 +791,14 @@ class DashboardController extends Controller
                 }
 
                 // salvar produto
-                $sql = "select * from products where name = '".str_replace('/','/',$produto)."' and serie = '".str_replace('/','/',$serie)."' ";
+                $sql = "select * from products where name = '".str_replace("'"," ",$produto)."' and serie = '".str_replace("'"," ",$serie)."' ";
                 $results = DB::connection('data_reports')->select($sql);
 
                 if( empty( $results) ) {
                     $sql = "insert into products( name, id_user, serie , id_labels , id_product_models, id_manufacturer ) 
-                    values( '".str_replace('/','/',$produto)."' , 27 , '".str_replace('/','/',$serie)."', ".$id_labels.", '".$id_product_models."', '".$id_manufacturer."' ) " ;
+                    values( '".str_replace("'"," ",$produto)."' , 27 , '".str_replace("'"," ",$serie)."', ".$id_labels.", '".$id_product_models."', '".$id_manufacturer."' ) " ;
                     DB::connection('data_reports')->select($sql);
-                    $sql = " select max(id_products) as id_products from products where name = '".str_replace('/','/',$produto)."' and serie = '".str_replace('/','/',$serie)."' " ;
+                    $sql = " select max(id_products) as id_products from products where name = '".str_replace("'"," ",$produto)."' and serie = '".str_replace("'"," ",$serie)."' " ;
                     $results2 = DB::connection('data_reports')->select($sql);
                     $id_products = $results2[0]->id_products ;
                 } else {
@@ -658,6 +830,6 @@ class DashboardController extends Controller
 
         fclose($handle);
 
-    }    
+    }  
 
 }

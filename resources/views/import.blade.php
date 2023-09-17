@@ -1,41 +1,52 @@
 <!doctype html>
-<html lang="en">
-   
-<head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Sistema unificado casablanca</title>
-      <!-- Favicon -->
-      <link rel="shortcut icon" href="{{URL::to('/')}}/images/favicon.ico" />
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="{{URL::to('/')}}/css/bootstrap.min.css">
-      <!-- Typography CSS -->
-      <link rel="stylesheet" href="{{URL::to('/')}}/css/typography.css">
-      <!-- Style CSS -->
-      <link rel="stylesheet" href="{{URL::to('/')}}/css/style.css">
-      <!-- Responsive CSS -->
-      <link rel="stylesheet" href="{{URL::to('/')}}/css/responsive.css">
-   </head>
-   <body>
-      <!-- loader Start -->
-      <div id="loading">
-         <div id="loading-center">
-         </div>
-      </div>
-      <!-- loader END -->
-      <!-- Wrapper Start -->
-      <div class="wrapper">
-         <!-- Sidebar  -->
-         <div class="iq-sidebar" style="background-color: #811F2C !important;">
+<html lang="pt_br">
 
-            @include('sidebar')
-         </div>
-         <!-- Page Content  -->
-         <div id="content-page" class="content-page">
-         @include('top')
-            <div class="container-fluid">
-               <div class="row">
+<head>
+        
+        <meta charset="utf-8" />
+        <title>ERP Casablanca Online</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{URL::to('/')}}/assets-novo/images/favicon.ico">
+
+        <!-- Layout Js -->
+        <script src="{{URL::to('/')}}/assets-novo/js/layout.js"></script>
+        <!-- Bootstrap Css -->
+        <link href="{{URL::to('/assets-novo/css')}}/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{URL::to('/assets-novo/css')}}/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{URL::to('/assets-novo/css')}}/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+
+
+    </head>
+
+    <body data-sidebar="colored">
+    
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            
+            @include('header')
+            
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                    <div class="row">
                   
                   <div class="col-sm-12 col-lg-12">
                      <div class="iq-card">
@@ -59,16 +70,18 @@
                               
                           </div>
 
+                          <div class="col-sm-12 col-lg-12">
+                              {{@$dataimimport}}
+                           </div>
+
                           <div class="form-row" style="padding-top: 10px;">
                               <div class="col">
                                 <button type="submit" class="btn btn-primary">Gravar Dados</button>
-                              </div>
-
-                              <div>
-                                  <a href="/labels">
+                                <a href="/labels">
                                  <button type="button" class="btn btn-primary">Voltar</button>   
                                  </a>
-                              </div>
+
+                            </div>
 
                             </div>
                            </form>
@@ -78,46 +91,49 @@
     
                   </div>
                </div>
-            </div>
-            <!-- Footer -->
-            @include('footer')
-            <!-- Footer END -->
-         </div>
-      </div>
-      <!-- Wrapper END -->
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="{{URL::to('/')}}/js/jquery.min.js"></script>
-      <script src="{{URL::to('/')}}/js/popper.min.js"></script>
-      <script src="{{URL::to('/')}}/js/bootstrap.min.js"></script>
-      <!-- Appear JavaScript -->
-      <script src="{{URL::to('/')}}/js/jquery.appear.js"></script>
-      <!-- Countdown JavaScript -->
-      <script src="{{URL::to('/')}}/js/countdown.min.js"></script>
-      <!-- Counterup JavaScript -->
-      <script src="{{URL::to('/')}}/js/waypoints.min.js"></script>
-      <script src="{{URL::to('/')}}/js/jquery.counterup.min.js"></script>
-      <!-- Wow JavaScript -->
-      <script src="{{URL::to('/')}}/js/wow.min.js"></script>
-      <!-- Apexcharts JavaScript -->
-      <script src="{{URL::to('/')}}/js/apexcharts.js"></script>
-      <!-- Slick JavaScript -->
-      <script src="{{URL::to('/')}}/js/slick.min.js"></script>
-      <!-- Select2 JavaScript -->
-      <script src="{{URL::to('/')}}/js/select2.min.js"></script>
-      <!-- Owl Carousel JavaScript -->
-      <script src="{{URL::to('/')}}/js/owl.carousel.min.js"></script>
-      <!-- Magnific Popup JavaScript -->
-      <script src="{{URL::to('/')}}/js/jquery.magnific-popup.min.js"></script>
-      <!-- Smooth Scrollbar JavaScript -->
-      <script src="{{URL::to('/')}}/js/smooth-scrollbar.js"></script>
-      <!-- lottie JavaScript -->
-      <script src="{{URL::to('/')}}/js/lottie.js"></script>
-      <!-- Chart Custom JavaScript -->
-      <script src="{{URL::to('/')}}/js/chart-custom.js"></script>
-      <!-- Custom JavaScript -->
-      <script src="{{URL::to('/')}}/js/custom.js"></script>
-   </body>
+                        <!-- end row -->
 
-<!-- Mirrored from templates.iqonic.design/xray/html/form-layout.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 17:27:45 GMT -->
+                       
+                        <!-- end row -->
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                
+                @include('novo-painel/footer')
+                
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        @if( is_array(@$return['modals']) )
+            @foreach(@$return['modals'] as $modal)
+                @include('includes/upload_prestador')
+            @endforeach
+        @endif
+       
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{{URL::to('/')}}/assets-novo/libs/jquery/jquery.min.js"></script>
+        <script src="{{URL::to('/')}}/assets-novo/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{{URL::to('/')}}/assets-novo/libs/metismenu/metisMenu.min.js"></script>
+        <script src="{{URL::to('/')}}/assets-novo/libs/simplebar/simplebar.min.js"></script>
+        <script src="{{URL::to('/')}}/assets-novo/libs/node-waves/waves.min.js"></script>
+
+        <!-- Icon -->
+        <script src="{{URL::to('/')}}/assets-novo/release/v2.0.1/script/monochrome/bundle.js"></script>
+
+        <!-- bs custom file input plugin -->
+        <script src="{{URL::to('/')}}/assets-novo/libs/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+        <script src="{{URL::to('/')}}/assets-novo/js/pages/form-element.init.js"></script>
+
+        <script src="{{URL::to('/')}}/assets-novo/js/app.js"></script>
+
+    </body>
+
 </html>

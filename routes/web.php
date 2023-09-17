@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -78,6 +76,25 @@ $router->post('colaborador', 'App\Http\Controllers\ColaboradorController@store')
 $router->post('colaborador/save', 'App\Http\Controllers\ColaboradorController@save') ;
 $router->delete('colaborador/{id}', 'App\Http\Controllers\ColaboradorController@destroy') ;
 $router->post('colaborador/{id}', 'App\Http\Controllers\ColaboradorController@update') ;
+
+#ocorrencias
+$router->get('occurrences', 'App\Http\Controllers\OccurrencesController@index') ;
+$router->get('occurrences/{limit}/{offset}/{order}/{search}', 'App\Http\Controllers\OccurrencesController@index') ;
+$router->get('occurrences/{id}', 'App\Http\Controllers\OccurrencesController@show') ;
+$router->post('occurrences', 'App\Http\Controllers\OccurrencesController@store') ;
+$router->post('occurrences/save', 'App\Http\Controllers\OccurrencesController@save') ;
+$router->delete('occurrences/{id}', 'App\Http\Controllers\OccurrencesController@destroy') ;
+$router->post('occurrences/{id}', 'App\Http\Controllers\OccurrencesController@update') ;
+
+#permissoes
+$router->get('permitions', 'App\Http\Controllers\PermitionsController@index') ;
+$router->get('permitions/{limit}/{offset}/{order}/{search}', 'App\Http\Controllers\PermitionsController@index') ;
+$router->get('permitions/{id}', 'App\Http\Controllers\PermitionsController@show') ;
+$router->post('permitions', 'App\Http\Controllers\PermitionsController@store') ;
+$router->post('permitions/save', 'App\Http\Controllers\PermitionsController@save') ;
+$router->delete('permitions/{id}', 'App\Http\Controllers\PermitionsController@destroy') ;
+$router->post('permitions/{id}', 'App\Http\Controllers\PermitionsController@update') ;
+
 
 #positions
 $router->get('positions', 'App\Http\Controllers\PositionsController@index') ;

@@ -103,7 +103,7 @@
         <script src="{{URL::to('/')}}/assets-novo/js/app.js"></script>
         
         <!-- Js: validação do login -->
-        <script src="public/js/login.js"></script>
+        <script src="{{URL::to('/')}}/js/login.js"></script>
 
         <script>
 
