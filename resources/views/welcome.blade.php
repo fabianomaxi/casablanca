@@ -101,10 +101,10 @@
         <script src="../../../unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 
         <script src="{{URL::to('/')}}/assets-novo/js/app.js"></script>
-        
+
         
         <!-- Js: validação do login -->
-        <script src="{{URL::to('/')}}/js/login.js"></script>
+        <script src="https://sistemas0.casablancaonline.com.br/js/login.js"></script>
 
         <script>
 
